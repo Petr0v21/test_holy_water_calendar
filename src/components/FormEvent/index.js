@@ -23,7 +23,6 @@ const FormEvent = ({
   event,
   fullForm,
 }) => {
-  console.log(method);
   return (
     <>
       <FormPositionWrapper onClick={cancelButtonHandler}>

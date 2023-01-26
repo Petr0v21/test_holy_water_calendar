@@ -140,6 +140,7 @@ export const DayShowComponent = ({
               value={selectedEvent.title}
               onChange={(e) => changeEventHandler(e.target.value, "title")}
               placeholder="Title"
+              required
             />
             <EventBody
               value={selectedEvent.description}
@@ -147,6 +148,7 @@ export const DayShowComponent = ({
                 changeEventHandler(e.target.value, "description")
               }
               placeholder="Description"
+              required
             />
             <div>
               <input

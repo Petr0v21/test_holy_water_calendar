@@ -50,10 +50,6 @@ const ButtonWrapper = styled("button")`
   align-items: center;
 `;
 
-const TodayButton = styled(ButtonWrapper)`
-  font-weight: bold;
-`;
-
 const Monitor = ({
   today,
   prevHandler,
@@ -61,6 +57,7 @@ const Monitor = ({
   setDisplayMode,
   displayMode,
   openFullForm,
+  selectDate,
 }) => (
   <DivWrapper>
     <div onClick={() => openFullForm()}>+</div>
@@ -87,6 +84,11 @@ const Monitor = ({
         <TitleWrapper>{today.format("MMMM")}</TitleWrapper>
         <TextWrapper>{today.format("YYYY")}</TextWrapper>
       </div>
+      <input
+        type="month"
+        lang="en"
+        onChange={(e) => selectDate(e.target.valueAsDate)}
+      />
       {/* <TodayButton onClick={todayHandler}>Today</TodayButton> */}
       <ButtonWrapper onClick={nextHandler}> &gt; </ButtonWrapper>
     </ButtonsWrapper>

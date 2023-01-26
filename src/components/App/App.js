@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import CalendarGrid from "../CalendarGrid";
-// import Header from "../Header";
 import { DISPLAY_MODE_DAY, DISPLAY_MODE_MONTH } from "../../helpers/constants";
 import { ShadowWrapper } from "../../styled-components";
 import { Monitor } from "../Monitor";
 import { DayShowComponent } from "../DayShowComponent";
 import FormEvent from "../FormEvent";
 
-window.moment = moment;
-// 1) Header with buttom(Create event) and navigate(show current mount and nav buttons that move for mounts) and icon calend(we can choose yaer and mount)
-// 2) Grid Calendar`s with blocks(one block has number day, string name day, list events)
+// window.moment = moment;
+// {
+//   id: 1,
+//   title: "Go to bath",
+//   description: "Go to bath",
+//   date: 1674704500,
+// },
+// {
+//   id: 2,
+//   title: "Go to walk",
+//   description: "Go to walk 23-th August",
+//   date: 1674705568,
+// },
+// {
+//   id: 3,
+//   title: "Make 7-th lesson",
+//   description: "Make 7-th lesson",
+//   date: 1674705568,
+// },
+
+const storageName = "items";
 
 const totalDays = 42;
 const defaultEvent = {
@@ -19,11 +36,12 @@ const defaultEvent = {
   date: moment().format("X"),
 };
 function App() {
+  const [events, setEvents] = useState([]);
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE_MONTH);
   moment.updateLocale("en", { week: { dow: 1 } });
   const [today, setToday] = useState(moment());
   const startDay = today.clone().startOf("month").startOf("week");
-
+  const selectDate = (date) => setToday(moment.unix(date / 1000));
   const prevHandler = () =>
     setToday((prev) => prev.clone().subtract(1, displayMode));
   const todayHandler = () => setToday(moment());
@@ -35,51 +53,23 @@ function App() {
   const [event, setEvent] = useState(null);
   const [isShowFullForm, setShowFullForm] = useState(false);
 
-  const [events, setEvents] = useState([
-    {
-      id: 1,
-      title: "Go to bath",
-      description: "Go to bath",
-      date: 1674704500,
-    },
-    {
-      id: 2,
-      title: "Go to walk",
-      description: "Go to walk 23-th August",
-      date: 1674705568,
-    },
-    {
-      id: 3,
-      title: "Make 7-th lesson",
-      description: "Make 7-th lesson",
-      date: 1674705568,
-    },
-    {
-      id: 4,
-      title: "New event",
-      description: "some text",
-      date: 1674605568,
-    },
-  ]);
-  // const startDayQuery = startDay.clone().format('X');
-  // const endDayQuery = startDay.clone().add(totalDays,'days').format('X');
-  useEffect(() => {
-    console.log("Change", method);
-  }, [method]);
+  // useEffect(() => {
+  //   console.log("Change", method);
+  // }, [method]);
 
   const openFormHandler = (methodName, eventForUpdate, dayItem) => {
-    setEvent(eventForUpdate || { ...defaultEvent, date: dayItem.format("X") });
-    console.log("met", methodName);
-    window.currentDay = today.format("X");
+    if (eventForUpdate) {
+      setEvent(eventForUpdate);
+    } else {
+      setEvent({ ...defaultEvent, date: dayItem.format("X") });
+      window.currentDay = dayItem.format("X");
+    }
     setMethod(methodName);
-    console.log("Final check", method);
   };
 
   const openModalFormHandler = (methodName, eventForUpdate, dayItem) => {
-    console.log("onDoubleClick", methodName);
     setShowForm(true);
     openFormHandler(methodName, eventForUpdate, dayItem);
-    console.log("Metod", method);
   };
 
   const openFullForm = () => {
@@ -104,35 +94,78 @@ function App() {
   };
 
   const changeEventHandlerTime = (timeUnix) => {
-    // console.log(window.currentDay);
     setEvent({ ...event, date: Number(window.currentDay) + timeUnix });
-    // console.log(event);
   };
 
-  const eventFetchHandler = () => {
-    if (method === "Update") {
-      setEvents((prevState) =>
-        prevState.map((eventEl) => (eventEl.id === event.id ? event : eventEl))
-      );
-    } else {
-      const id = events.length + 1;
-      if (isShowFullForm) {
-        let mid = Number(window.currentDay) + event.date;
-        setEvents((prevState) => [...prevState, { ...event, date: mid, id }]);
-      } else {
-        setEvents((prevState) => [...prevState, { ...event, id }]);
+  useEffect(() => {
+    if (localStorage.getItem(storageName)) {
+      const data = JSON.parse(localStorage.getItem(storageName));
+      if (data && data.events) {
+        setEvents(data.events);
       }
     }
-    console.log(events);
-    cancelButtonHandler();
+  }, []);
+
+  const eventFetchHandler = () => {
+    if (validation()) {
+      if (method === "Update") {
+        setEvents((prevState) =>
+          prevState.map((eventEl) =>
+            eventEl.id === event.id ? event : eventEl
+          )
+        );
+        localStorage.setItem(
+          storageName,
+          JSON.stringify({
+            events: events.map((eventEl) =>
+              eventEl.id === event.id ? event : eventEl
+            ),
+          })
+        );
+      } else {
+        const id = events.length + 1;
+        if (isShowFullForm) {
+          let mid = Number(window.currentDay) + event.date;
+          setEvents((prevState) => [...prevState, { ...event, date: mid, id }]);
+          localStorage.setItem(
+            storageName,
+            JSON.stringify({
+              events: [...events, { ...event, date: mid, id }],
+            })
+          );
+        } else {
+          setEvents((prevState) => [...prevState, { ...event, id }]);
+          localStorage.setItem(
+            storageName,
+            JSON.stringify({
+              events: [...events, { ...event, id }],
+            })
+          );
+        }
+      }
+      console.log(localStorage);
+      cancelButtonHandler();
+    } else {
+      alert("Field title and Date required!!!");
+    }
   };
 
   const removeEventHandler = () => {
-    console.log(event);
     setEvents((prevState) =>
       prevState.filter((eventEl) => eventEl.id !== event.id)
     );
+    localStorage.setItem(
+      storageName,
+      JSON.stringify({
+        events: events.filter((eventEl) => eventEl.id !== event.id),
+      })
+    );
+    console.log(localStorage);
     cancelButtonHandler();
+  };
+
+  const validation = () => {
+    return event.title.length && window.currentDay !== 0;
   };
 
   return (
@@ -152,6 +185,7 @@ function App() {
       <ShadowWrapper>
         <Monitor
           today={today}
+          selectDate={selectDate}
           prevHandler={prevHandler}
           todayHandler={todayHandler}
           nextHandler={nextHandler}
