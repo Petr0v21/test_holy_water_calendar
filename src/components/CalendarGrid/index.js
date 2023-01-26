@@ -17,6 +17,7 @@ const CalendarGrid = ({
   events,
   openFormHandler,
   setDisplayMode,
+  setToday,
 }) => {
   return (
     <>
@@ -28,6 +29,7 @@ const CalendarGrid = ({
           startDay={startDay}
           today={today}
           setDisplayMode={setDisplayMode}
+          setToday={setToday}
         />
       </GridWrapper>
     </>

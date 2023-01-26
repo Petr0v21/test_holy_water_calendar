@@ -66,6 +66,7 @@ export const MonthDay = ({
   openFormHandler,
   events,
   setDisplayMode,
+  setToday,
 }) => {
   return (
     <CellWrapper
@@ -98,7 +99,10 @@ export const MonthDay = ({
           {events.length > 2 ? (
             <EventListItemWrapper key="show more">
               <EventItemWrapper
-                onClick={() => setDisplayMode(DISPLAY_MODE_DAY)}
+                onClick={() => {
+                  setDisplayMode(DISPLAY_MODE_DAY);
+                  setToday(dayItem);
+                }}
               >
                 show more...
               </EventItemWrapper>

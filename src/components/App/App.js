@@ -53,10 +53,6 @@ function App() {
   const [event, setEvent] = useState(null);
   const [isShowFullForm, setShowFullForm] = useState(false);
 
-  // useEffect(() => {
-  //   console.log("Change", method);
-  // }, [method]);
-
   const openFormHandler = (methodName, eventForUpdate, dayItem) => {
     if (eventForUpdate) {
       setEvent(eventForUpdate);
@@ -201,6 +197,7 @@ function App() {
             events={events}
             openFormHandler={openModalFormHandler}
             setDisplayMode={setDisplayMode}
+            setToday={setToday}
           />
         ) : null}
         {displayMode === DISPLAY_MODE_DAY ? (
