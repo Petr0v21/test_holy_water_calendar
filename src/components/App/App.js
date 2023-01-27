@@ -33,7 +33,6 @@ function App() {
   };
   checkTodayinBD();
   const [today, setToday] = useState(checkTodayinBD());
-  console.log(today);
 
   useEffect(() => {
     localStorage.setItem(todayInBD, JSON.stringify(today));
@@ -138,7 +137,6 @@ function App() {
           );
         }
       }
-      console.log(localStorage);
       cancelButtonHandler();
     } else {
       alert("Field title and Date required!!!");
@@ -155,7 +153,6 @@ function App() {
         events: events.filter((eventEl) => eventEl.id !== event.id),
       })
     );
-    console.log(localStorage);
     cancelButtonHandler();
   };
 

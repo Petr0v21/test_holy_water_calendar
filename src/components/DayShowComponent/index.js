@@ -87,18 +87,10 @@ export const DayShowComponent = ({
   const eventList = events.filter((event) =>
     isDayContainCurrentEvent(event, today)
   );
-  console.log("eventList", eventList);
 
   const x = [...new Array(cellsInDay)].map((_, i) => {
     const temp = [];
-    // from i
-    // to i + 1
-    // `${i}`.padStart(2, '0')
-    // moment(event).isSameOrAfter('20', 'hour'); // SameOr
-    // moment(event).isBefore('21', 'hour');
     eventList.forEach((event) => {
-      // console.log(event);
-      // console.log(+moment.unix(+event.date).format("H"), i);
       if (+moment.unix(+event.date).format("H") === i) {
         temp.push(event);
       }
@@ -109,17 +101,6 @@ export const DayShowComponent = ({
   return (
     <DayShowWrapper>
       <EventsListWrapper>
-        {/*<EventListWrapper>*/}
-        {/*  {*/}
-        {/*    eventList.map(event => (*/}
-        {/*      <EventListItemWrapper key={event.id}>*/}
-        {/*        <EventItemWrapper onClick={() => openFormHandler('Update',event)}>*/}
-        {/*          {event.title}*/}
-        {/*        </EventItemWrapper>*/}
-        {/*      </EventListItemWrapper>*/}
-        {/*    ))*/}
-        {/*  }*/}
-        {/*</EventListWrapper>*/}
         <ScaleWrapper>
           {x.map((_, i) => (
             <ScaleCellWrapper key={i}>
@@ -127,9 +108,12 @@ export const DayShowComponent = ({
                 {i ? <>{`${i}`.padStart(2, "0")}:00</> : null}
               </ScaleCellTimeWrapper>
               <ScaleCellEventWrapper>
-                {_.map((e) => (
+                {_.map((e, index) => (
                   <EventItemWrapper
-                    onClick={() => openFormHandler("Update", e)}
+                    key={e.date + index}
+                    onClick={() => {
+                      openFormHandler("Update", e);
+                    }}
                   >
                     {e.title}
                   </EventItemWrapper>
