@@ -3,14 +3,19 @@ import styled from "styled-components";
 import {
   ButtonsWrapper,
   ButtonWrapper,
+  DataInput,
   EventBody,
   EventTitle,
   FormPositionWrapper,
   FormWrapper,
+  TimeInput,
 } from "../../styled-components";
 
 const DataTimeRow = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
 `;
 
 const FormEvent = ({
@@ -38,7 +43,7 @@ const FormEvent = ({
             placeholder="Description"
           />
           <DataTimeRow>
-            <input
+            <TimeInput
               type="time"
               id="appt"
               name="appt"
@@ -48,7 +53,7 @@ const FormEvent = ({
               }
             />
             {fullForm && (
-              <input
+              <DataInput
                 type="date"
                 onChange={(e) => {
                   window.currentDay = e.target.valueAsNumber / 1000;

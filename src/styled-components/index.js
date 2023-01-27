@@ -46,10 +46,10 @@ export const EventItemWrapper = styled("button")`
   border-radius: 2px;
 `;
 
-export const EventTitle = styled("input")`
+export const EventTitle = styled.input`
   padding: 8px 14px;
   font-size: 0.85rem;
-  width: 100%;
+  ${(props) => (props.inCurentDay ? "width: 100%;" : "")}
   border: unset;
   background-color: #1e1f21;
   color: #dddddd;
@@ -57,10 +57,10 @@ export const EventTitle = styled("input")`
   border-bottom: 1px solid #464648;
 `;
 
-export const EventBody = styled("textarea")`
+export const EventBody = styled.textarea`
   padding: 8px 14px;
   font-size: 0.85rem;
-  width: 100%;
+  ${(props) => (props.inCurentDay ? "width: 100%;" : "")}
   border: unset;
   background-color: #1e1f21;
   color: #dddddd;
@@ -116,7 +116,7 @@ export const FormPositionWrapper = styled("div")`
 export const FormWrapper = styled(ShadowWrapper)`
   width: 320px;
   min-width: 320px;
-  height: 132px;
+  height: auto;
   background-color: #1e1f21;
   color: #dddddd;
   box-shadow: unset;
@@ -175,4 +175,46 @@ export const OpenFullFormButton = styled("span")`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+`;
+
+export const TimeInput = styled("input")`
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  border: unset;
+  background-color: #1e1f21;
+  color: #dddddd;
+  outline: unset;
+  border-bottom: 1px solid #464648;
+  &:focus-visible {
+    outline: 0px solid crimson;
+  }
+  &::-webkit-calendar-picker-indicator {
+    visibility: visible;
+    font-size: 18px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+`;
+
+export const DataInput = styled("input")`
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  border: unset;
+  background-color: #1e1f21;
+  color: #dddddd;
+  outline: unset;
+  border-bottom: 1px solid #464648;
+  &:focus-visible {
+    outline: 0px solid crimson;
+  }
+  &::-webkit-calendar-picker-indicator {
+    visibility: visible;
+    font-size: 18px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 3px;
+  }
 `;

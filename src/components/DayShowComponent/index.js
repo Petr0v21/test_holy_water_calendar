@@ -8,6 +8,7 @@ import {
   EventBody,
   EventItemWrapper,
   EventTitle,
+  TimeInput,
 } from "../../styled-components";
 
 const DayShowWrapper = styled("div")`
@@ -141,6 +142,7 @@ export const DayShowComponent = ({
               onChange={(e) => changeEventHandler(e.target.value, "title")}
               placeholder="Title"
               required
+              inCurentDay
             />
             <EventBody
               value={selectedEvent.description}
@@ -149,9 +151,10 @@ export const DayShowComponent = ({
               }
               placeholder="Description"
               required
+              inCurentDay
             />
             <div>
-              <input
+              <TimeInput
                 type="time"
                 id="appt"
                 name="appt"
