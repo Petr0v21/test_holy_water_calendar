@@ -7,27 +7,8 @@ import { Monitor } from "../Monitor";
 import { DayShowComponent } from "../DayShowComponent";
 import FormEvent from "../FormEvent";
 
-// window.moment = moment;
-// {
-//   id: 1,
-//   title: "Go to bath",
-//   description: "Go to bath",
-//   date: 1674704500,
-// },
-// {
-//   id: 2,
-//   title: "Go to walk",
-//   description: "Go to walk 23-th August",
-//   date: 1674705568,
-// },
-// {
-//   id: 3,
-//   title: "Make 7-th lesson",
-//   description: "Make 7-th lesson",
-//   date: 1674705568,
-// },
-
 const storageName = "items";
+const todayInBD = "start";
 
 const totalDays = 42;
 const defaultEvent = {
@@ -39,7 +20,24 @@ function App() {
   const [events, setEvents] = useState([]);
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE_MONTH);
   moment.updateLocale("en", { week: { dow: 1 } });
-  const [today, setToday] = useState(moment());
+  const checkTodayinBD = () => {
+    let todayNow;
+    if (localStorage.getItem(todayInBD)) {
+      todayNow = JSON.parse(localStorage.getItem(todayInBD));
+      if (todayNow) {
+        return moment(todayNow);
+      }
+    }
+    todayNow = moment();
+    return todayNow;
+  };
+  checkTodayinBD();
+  const [today, setToday] = useState(checkTodayinBD());
+
+  useEffect(() => {
+    localStorage.setItem(todayInBD, JSON.stringify(today));
+  }, [today]);
+
   const startDay = today.clone().startOf("month").startOf("week");
   const selectDate = (date) => setToday(moment.unix(date / 1000));
   const prevHandler = () =>
@@ -57,8 +55,8 @@ function App() {
     if (eventForUpdate) {
       setEvent(eventForUpdate);
     } else {
-      setEvent({ ...defaultEvent, date: dayItem.format("X") });
       window.currentDay = dayItem.format("X");
+      setEvent({ ...defaultEvent, date: window.currentDay });
     }
     setMethod(methodName);
   };
@@ -139,7 +137,6 @@ function App() {
           );
         }
       }
-      console.log(localStorage);
       cancelButtonHandler();
     } else {
       alert("Field title and Date required!!!");
@@ -156,7 +153,6 @@ function App() {
         events: events.filter((eventEl) => eventEl.id !== event.id),
       })
     );
-    console.log(localStorage);
     cancelButtonHandler();
   };
 

@@ -8,6 +8,7 @@ import {
   EventBody,
   EventItemWrapper,
   EventTitle,
+  TimeInput,
 } from "../../styled-components";
 
 const DayShowWrapper = styled("div")`
@@ -61,6 +62,11 @@ const ScaleCellTimeWrapper = styled("div")`
   top: -6px;
   font-size: 8px;
 `;
+const OpenFormWrapper = styled("div")`
+  display: flex;
+  justify-content: center;
+  padding: 5%;
+`;
 
 const ScaleCellEventWrapper = styled("div")`
   min-height: 16px;
@@ -81,18 +87,10 @@ export const DayShowComponent = ({
   const eventList = events.filter((event) =>
     isDayContainCurrentEvent(event, today)
   );
-  console.log("eventList", eventList);
 
   const x = [...new Array(cellsInDay)].map((_, i) => {
     const temp = [];
-    // from i
-    // to i + 1
-    // `${i}`.padStart(2, '0')
-    // moment(event).isSameOrAfter('20', 'hour'); // SameOr
-    // moment(event).isBefore('21', 'hour');
     eventList.forEach((event) => {
-      // console.log(event);
-      // console.log(+moment.unix(+event.date).format("H"), i);
       if (+moment.unix(+event.date).format("H") === i) {
         temp.push(event);
       }
@@ -103,17 +101,6 @@ export const DayShowComponent = ({
   return (
     <DayShowWrapper>
       <EventsListWrapper>
-        {/*<EventListWrapper>*/}
-        {/*  {*/}
-        {/*    eventList.map(event => (*/}
-        {/*      <EventListItemWrapper key={event.id}>*/}
-        {/*        <EventItemWrapper onClick={() => openFormHandler('Update',event)}>*/}
-        {/*          {event.title}*/}
-        {/*        </EventItemWrapper>*/}
-        {/*      </EventListItemWrapper>*/}
-        {/*    ))*/}
-        {/*  }*/}
-        {/*</EventListWrapper>*/}
         <ScaleWrapper>
           {x.map((_, i) => (
             <ScaleCellWrapper key={i}>
@@ -121,9 +108,12 @@ export const DayShowComponent = ({
                 {i ? <>{`${i}`.padStart(2, "0")}:00</> : null}
               </ScaleCellTimeWrapper>
               <ScaleCellEventWrapper>
-                {_.map((e) => (
+                {_.map((e, index) => (
                   <EventItemWrapper
-                    onClick={() => openFormHandler("Update", e)}
+                    key={e.date + index}
+                    onClick={() => {
+                      openFormHandler("Update", e);
+                    }}
                   >
                     {e.title}
                   </EventItemWrapper>
@@ -141,6 +131,7 @@ export const DayShowComponent = ({
               onChange={(e) => changeEventHandler(e.target.value, "title")}
               placeholder="Title"
               required
+              inCurentDay
             />
             <EventBody
               value={selectedEvent.description}
@@ -149,9 +140,10 @@ export const DayShowComponent = ({
               }
               placeholder="Description"
               required
+              inCurentDay
             />
             <div>
-              <input
+              <TimeInput
                 type="time"
                 id="appt"
                 name="appt"
@@ -177,11 +169,13 @@ export const DayShowComponent = ({
           </div>
         ) : (
           <>
-            <div>
-              <button onClick={() => openFormHandler("Create", null, today)}>
+            <OpenFormWrapper>
+              <ButtonWrapper
+                onClick={() => openFormHandler("Create", null, today)}
+              >
                 Create new event
-              </button>
-            </div>
+              </ButtonWrapper>
+            </OpenFormWrapper>
             <NoEventMsg>No event selected</NoEventMsg>
           </>
         )}

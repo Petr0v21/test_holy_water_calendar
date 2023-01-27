@@ -46,10 +46,10 @@ export const EventItemWrapper = styled("button")`
   border-radius: 2px;
 `;
 
-export const EventTitle = styled("input")`
+export const EventTitle = styled.input`
   padding: 8px 14px;
   font-size: 0.85rem;
-  width: 100%;
+  ${(props) => (props.inCurentDay ? "width: 100%;" : "")}
   border: unset;
   background-color: #1e1f21;
   color: #dddddd;
@@ -57,10 +57,10 @@ export const EventTitle = styled("input")`
   border-bottom: 1px solid #464648;
 `;
 
-export const EventBody = styled("textarea")`
+export const EventBody = styled.textarea`
   padding: 8px 14px;
   font-size: 0.85rem;
-  width: 100%;
+  ${(props) => (props.inCurentDay ? "width: 100%;" : "")}
   border: unset;
   background-color: #1e1f21;
   color: #dddddd;
@@ -73,16 +73,25 @@ export const EventBody = styled("textarea")`
 export const ButtonsWrapper = styled("div")`
   padding: 8px 14px;
   display: flex;
-  justify-content: flex-end;
+  // justify-content: flex-end;
+  justify-content: space-evenly;
 `;
 
-export const ButtonWrapper = styled("button")`
-  color: ${(props) => (props.danger ? "#f00" : "#27282A")};
-  border: 1px solid ${(props) => (props.danger ? "#f00" : "#27282A")};
+export const ButtonWrapper = styled("div")`
+  color: ${(props) => (props.danger ? "#f00" : "#dddddd")};
+  border: 1px solid ${(props) => (props.danger ? "#f00" : "#dddddd")};
   border-radius: 2px;
+  font-size: 14px;
+  padding: 8px 14px;
+  color: #dddddd;
   cursor: pointer;
+  transition: all 0.4s ease-in-out;
   &:not(:last-child) {
     margin-right: 2px;
+  }
+  &:hover {
+    background: black;
+    color: ${(props) => (props.danger ? "#f00" : "white")};
   }
 `;
 
@@ -116,8 +125,105 @@ export const FormPositionWrapper = styled("div")`
 export const FormWrapper = styled(ShadowWrapper)`
   width: 320px;
   min-width: 320px;
-  height: 132px;
+  height: auto;
   background-color: #1e1f21;
   color: #dddddd;
   box-shadow: unset;
+`;
+
+export const DatePicker = styled("input")`
+  width: 60px;
+  height: 40px;
+  border: 0;
+  margin-right: 8px;
+  background: rgba(0, 0, 0, 0);
+  &:focus-visible {
+    outline: 0px solid crimson;
+  }
+
+  &::-webkit-datetime-edit-month-field {
+    visibility: hidden;
+    width: 0;
+  }
+  &::-webkit-datetime-edit-day-field {
+    visibility: hidden;
+    width: 0;
+  }
+  &::-webkit-datetime-edit-year-field {
+    visibility: hidden;
+    width: 0;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    visibility: visible;
+    font-size: 18px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+`;
+
+export const TextWrapper = styled("span")`
+  font-size: 24px;
+`;
+
+export const TitleWrapper = styled(TextWrapper)`
+  font-weight: 700;
+  margin-right: 8px;
+  margin-left: 8px;
+`;
+
+export const OpenFullFormButton = styled("span")`
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  background: #f00;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+export const TimeInput = styled("input")`
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  border: unset;
+  background-color: #1e1f21;
+  color: #dddddd;
+  outline: unset;
+  border-bottom: 1px solid #464648;
+  &:focus-visible {
+    outline: 0px solid crimson;
+  }
+  &::-webkit-calendar-picker-indicator {
+    visibility: visible;
+    font-size: 18px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+`;
+
+export const DataInput = styled("input")`
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  border: unset;
+  background-color: #1e1f21;
+  color: #dddddd;
+  outline: unset;
+  border-bottom: 1px solid #464648;
+  &:focus-visible {
+    outline: 0px solid crimson;
+  }
+  &::-webkit-calendar-picker-indicator {
+    visibility: visible;
+    font-size: 18px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 3px;
+  }
 `;

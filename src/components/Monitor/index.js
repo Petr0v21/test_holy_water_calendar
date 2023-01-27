@@ -1,6 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { DISPLAY_MODE_DAY, DISPLAY_MODE_MONTH } from "../../helpers/constants";
+import {
+  DatePicker,
+  OpenFullFormButton,
+  TextWrapper,
+  TitleWrapper,
+} from "../../styled-components";
 
 const DivWrapper = styled("div")`
   display: flex;
@@ -11,19 +17,17 @@ const DivWrapper = styled("div")`
   position: relative;
 `;
 
-const TextWrapper = styled("span")`
-  font-size: 32px;
-`;
-
-const TitleWrapper = styled(TextWrapper)`
-  font-weight: bold;
-  margin-right: 8px;
-  margin-left: 8px;
-`;
-
 const ButtonsWrapper = styled("div")`
   display: flex;
   align-items: center;
+  gap: 1%;
+`;
+
+const DateText = styled("div")`
+  width: 225px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 `;
 
 const ButtonsCenterWrapper = styled(ButtonsWrapper)`
@@ -60,7 +64,7 @@ const Monitor = ({
   selectDate,
 }) => (
   <DivWrapper>
-    <div onClick={() => openFullForm()}>+</div>
+    <OpenFullFormButton onClick={() => openFullForm()}>+</OpenFullFormButton>
     <ButtonsCenterWrapper>
       <ButtonWrapper
         unPressed={displayMode === DISPLAY_MODE_MONTH}
@@ -77,16 +81,15 @@ const Monitor = ({
     </ButtonsCenterWrapper>
     <ButtonsWrapper>
       <ButtonWrapper onClick={prevHandler}> &lt; </ButtonWrapper>
-      <div>
+      <DateText>
         {displayMode === DISPLAY_MODE_DAY ? (
           <TextWrapper>{today.format("DD")}</TextWrapper>
         ) : null}
         <TitleWrapper>{today.format("MMMM")}</TitleWrapper>
         <TextWrapper>{today.format("YYYY")}</TextWrapper>
-      </div>
-      <input
+      </DateText>
+      <DatePicker
         type="month"
-        lang="en"
         onChange={(e) => selectDate(e.target.valueAsDate)}
       />
       {/* <TodayButton onClick={todayHandler}>Today</TodayButton> */}
