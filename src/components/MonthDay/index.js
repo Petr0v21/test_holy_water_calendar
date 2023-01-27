@@ -26,7 +26,7 @@ const CurrentDay = styled("div")`
 
 const ShowDayWrapper = styled("div")`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 `;
 
 const EventListWrapper = styled("ul")`
@@ -59,7 +59,7 @@ const EventItemWrapper = styled("button")`
   border: 1px solid #5d5f63;
   border-radius: 2px;
 `;
-//CalendarCell
+
 export const MonthDay = ({
   dayItem,
   today,
@@ -76,6 +76,11 @@ export const MonthDay = ({
     >
       <RowInCell justifyContent={"flex-end"}>
         <ShowDayWrapper>
+          <DayWrapper
+            onDoubleClick={() => openFormHandler("Create", null, dayItem)}
+          >
+            {dayItem.format("dd")}
+          </DayWrapper>
           <DayWrapper
             onDoubleClick={() => openFormHandler("Create", null, dayItem)}
           >

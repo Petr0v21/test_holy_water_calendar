@@ -7,26 +7,6 @@ import { Monitor } from "../Monitor";
 import { DayShowComponent } from "../DayShowComponent";
 import FormEvent from "../FormEvent";
 
-// window.moment = moment;
-// {
-//   id: 1,
-//   title: "Go to bath",
-//   description: "Go to bath",
-//   date: 1674704500,
-// },
-// {
-//   id: 2,
-//   title: "Go to walk",
-//   description: "Go to walk 23-th August",
-//   date: 1674705568,
-// },
-// {
-//   id: 3,
-//   title: "Make 7-th lesson",
-//   description: "Make 7-th lesson",
-//   date: 1674705568,
-// },
-
 const storageName = "items";
 
 const totalDays = 42;
@@ -57,8 +37,8 @@ function App() {
     if (eventForUpdate) {
       setEvent(eventForUpdate);
     } else {
-      setEvent({ ...defaultEvent, date: dayItem.format("X") });
       window.currentDay = dayItem.format("X");
+      setEvent({ ...defaultEvent, date: window.currentDay });
     }
     setMethod(methodName);
   };

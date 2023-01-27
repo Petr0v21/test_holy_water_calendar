@@ -121,3 +121,58 @@ export const FormWrapper = styled(ShadowWrapper)`
   color: #dddddd;
   box-shadow: unset;
 `;
+
+export const DatePicker = styled("input")`
+  width: 60px;
+  height: 40px;
+  border: 0;
+  margin-right: 8px;
+  background: rgba(0, 0, 0, 0);
+  &:focus-visible {
+    outline: 0px solid crimson;
+  }
+
+  &::-webkit-datetime-edit-month-field {
+    visibility: hidden;
+    width: 0;
+  }
+  &::-webkit-datetime-edit-day-field {
+    visibility: hidden;
+    width: 0;
+  }
+  &::-webkit-datetime-edit-year-field {
+    visibility: hidden;
+    width: 0;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    visibility: visible;
+    font-size: 18px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+`;
+
+export const TextWrapper = styled("span")`
+  font-size: 24px;
+`;
+
+export const TitleWrapper = styled(TextWrapper)`
+  font-weight: 700;
+  margin-right: 8px;
+  margin-left: 8px;
+`;
+
+export const OpenFullFormButton = styled("span")`
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  background: #f00;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
