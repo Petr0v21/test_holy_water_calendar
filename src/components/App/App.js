@@ -8,6 +8,7 @@ import { DayShowComponent } from "../DayShowComponent";
 import FormEvent from "../FormEvent";
 
 const storageName = "items";
+const todayInBD = "start";
 
 const totalDays = 42;
 const defaultEvent = {
@@ -19,7 +20,25 @@ function App() {
   const [events, setEvents] = useState([]);
   const [displayMode, setDisplayMode] = useState(DISPLAY_MODE_MONTH);
   moment.updateLocale("en", { week: { dow: 1 } });
-  const [today, setToday] = useState(moment());
+  const checkTodayinBD = () => {
+    let todayNow;
+    if (localStorage.getItem(todayInBD)) {
+      todayNow = JSON.parse(localStorage.getItem(todayInBD));
+      if (todayNow) {
+        return moment(todayNow);
+      }
+    }
+    todayNow = moment();
+    return todayNow;
+  };
+  checkTodayinBD();
+  const [today, setToday] = useState(checkTodayinBD());
+  console.log(today);
+
+  useEffect(() => {
+    localStorage.setItem(todayInBD, JSON.stringify(today));
+  }, [today]);
+
   const startDay = today.clone().startOf("month").startOf("week");
   const selectDate = (date) => setToday(moment.unix(date / 1000));
   const prevHandler = () =>
