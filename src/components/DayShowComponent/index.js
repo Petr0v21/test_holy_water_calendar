@@ -62,6 +62,11 @@ const ScaleCellTimeWrapper = styled("div")`
   top: -6px;
   font-size: 8px;
 `;
+const OpenFormWrapper = styled("div")`
+  display: flex;
+  justify-content: center;
+  padding: 5%;
+`;
 
 const ScaleCellEventWrapper = styled("div")`
   min-height: 16px;
@@ -180,11 +185,13 @@ export const DayShowComponent = ({
           </div>
         ) : (
           <>
-            <div>
-              <button onClick={() => openFormHandler("Create", null, today)}>
+            <OpenFormWrapper>
+              <ButtonWrapper
+                onClick={() => openFormHandler("Create", null, today)}
+              >
                 Create new event
-              </button>
-            </div>
+              </ButtonWrapper>
+            </OpenFormWrapper>
             <NoEventMsg>No event selected</NoEventMsg>
           </>
         )}

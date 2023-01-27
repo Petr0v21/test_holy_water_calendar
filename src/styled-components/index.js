@@ -73,16 +73,25 @@ export const EventBody = styled.textarea`
 export const ButtonsWrapper = styled("div")`
   padding: 8px 14px;
   display: flex;
-  justify-content: flex-end;
+  // justify-content: flex-end;
+  justify-content: space-evenly;
 `;
 
-export const ButtonWrapper = styled("button")`
-  color: ${(props) => (props.danger ? "#f00" : "#27282A")};
-  border: 1px solid ${(props) => (props.danger ? "#f00" : "#27282A")};
+export const ButtonWrapper = styled("div")`
+  color: ${(props) => (props.danger ? "#f00" : "#dddddd")};
+  border: 1px solid ${(props) => (props.danger ? "#f00" : "#dddddd")};
   border-radius: 2px;
+  font-size: 14px;
+  padding: 8px 14px;
+  color: #dddddd;
   cursor: pointer;
+  transition: all 0.4s ease-in-out;
   &:not(:last-child) {
     margin-right: 2px;
+  }
+  &:hover {
+    background: black;
+    color: ${(props) => (props.danger ? "#f00" : "white")};
   }
 `;
 
